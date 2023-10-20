@@ -1,26 +1,33 @@
 {
-  "name": "panesul_app",
+  "name": "panesul_fechamento",
   "version": "1.0.0",
   "description": "Versao desktop da pagina fechamento de caixa",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron-forge start",
-    "package": "electron-forge package",
-    "make": "electron-forge make"
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaliztro/Panesul-Electron.git"
   },
   "author": "Kaliztro",
   "license": "MIT",
-  "devDependencies": {
-    "@electron-forge/cli": "^6.4.2",
-    "@electron-forge/maker-deb": "^6.4.2",
-    "@electron-forge/maker-rpm": "^6.4.2",
-    "@electron-forge/maker-squirrel": "^6.4.2",
-    "@electron-forge/maker-zip": "^6.4.2",
-    "@electron-forge/plugin-auto-unpack-natives": "^6.4.2",
-    "electron": "^26.3.0"
+  "bugs": {
+    "url": "https://github.com/kaliztro/Panesul-Electron/issues"
   },
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
+  "homepage": "https://github.com/kaliztro/Panesul-Electron#readme",
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4"
+  },
+  "build": {
+    "win": {
+      "icon": "./img/Panesul.ico"
+    },
+    "nsis": {
+      "installerIcon": "./img/Panesul.ico",
+      "installerHeaderIcon": "./img/Panesul.ico",
+      "deleteAppDataOnUninstall": true
+    }
   }
 }
