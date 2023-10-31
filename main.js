@@ -1,27 +1,40 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow } = require('electron');
+const path = require('path');
+const url = require('url');
 
-const createWindow = () => {
-  const win = new BrowserWindow({
-    width: 1080,
-    height: 800,
+// Carrega o módulo autoUpdater
+// require('./autoUpdater');
+
+let mainWindow;
+
+function createWindow() {
+  mainWindow = new BrowserWindow({ 
+    width: 1100, 
+    height: 950, 
+    minHeight: 600,
+    minWidth: 400,
+    autoHideMenuBar: true,
     icon: './img/Panesul.ico'
-  })
+  });
 
-  win.loadFile('./html/index.html')
+  // Carrega o arquivo HTML da sua interface de usuário
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, './html/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
 }
 
-app.whenReady().then(() => {
-  createWindow()
+app.on('ready', createWindow);
 
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow()
-    }
-  })
-})
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') app.quit();
+});
 
-app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit()
-  }
-})
+app.on('activate', function () {
+  if (mainWindow === null) createWindow();
+});
