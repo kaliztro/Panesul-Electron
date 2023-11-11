@@ -1,6 +1,8 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
 const url = require('url');
+
+const { autoUpdater } = require('electron-updater');
 
 // Carrega o módulo autoUpdater
 // require('./autoUpdater');
@@ -8,9 +10,9 @@ const url = require('url');
 let mainWindow;
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ 
-    width: 1100, 
-    height: 950, 
+  mainWindow = new BrowserWindow({
+    width: 1100,
+    height: 950,
     minHeight: 600,
     minWidth: 400,
     autoHideMenuBar: true,
@@ -27,6 +29,10 @@ function createWindow() {
   mainWindow.on('closed', function () {
     mainWindow = null;
   });
+
+  mainWindow.once('ready-to-show', () => {
+    autoUpdater.checkForUpdatesAndNotify();
+  });
 }
 
 app.on('ready', createWindow);
@@ -38,3 +44,11 @@ app.on('window-all-closed', function () {
 app.on('activate', function () {
   if (mainWindow === null) createWindow();
 });
+
+autoUpdater.on('update-available', () => {
+  mainWindow.webContents.send('atualizacao_disponivel');
+});
+autoUpdater.on('update-downloaded', () => {
+  mainWindow.webContents.send('atualizacao_baixada');
+});
+

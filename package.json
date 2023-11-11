@@ -1,11 +1,12 @@
 {
   "name": "panesul_fechamento",
-  "version": "1.0.17",
+  "version": "1.1.38",
   "description": "Versao desktop da pagina fechamento de caixa",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "dist": "electron-builder"
+    "build": "electron-builder build --win --publish never",
+    "deploy": "electron-builder build --win --publish always"
   },
   "repository": {
     "type": "git",
@@ -22,8 +23,6 @@
     "electron-builder": "^24.6.4"
   },
   "dependencies": {
-    "electron-is-dev": "^2.0.0",
-    "electron-log": "^4.4.8",
     "electron-updater": "^6.1.4"
   }
 }
