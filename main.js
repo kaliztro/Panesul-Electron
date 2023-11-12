@@ -1,11 +1,8 @@
-const { app, BrowserWindow, ipcMain, dialog } = require('electron');
+const { app, BrowserWindow } = require('electron');
 const path = require('path');
 const url = require('url');
 
 const { autoUpdater } = require('electron-updater');
-
-// Carrega o módulo autoUpdater
-// require('./autoUpdater');
 
 let mainWindow;
 
@@ -45,28 +42,4 @@ app.on('activate', function () {
   if (mainWindow === null) createWindow();
 });
 
-autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-     type: 'info',
-     buttons: ['Ok'],
-     title: 'Atualização disponivel',
-     message: process.platform === 'win32' ? releaseNotes : releaseName,
-     detail: 'Baixando nova versão. O aplicativo irá reiniciar para aplicar alterações.'
-  };
-  dialog.showMessageBox(dialogOpts);
-
-  updateInterval = null;
-});
-
-autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-  const dialogOpts = {
-     type: 'info',
-     buttons: ['Restart', 'Later'],
-     title: 'Application Update',
-     message: process.platform === 'win32' ? releaseNotes : releaseName,
-     detail: 'Uma nova versão foi baixada. Reinicie o aplicativo para aplicar as alterações.'
-  };
-  dialog.showMessageBox(dialogOpts).then((returnValue) => {
-     if (returnValue.response === 0) autoUpdater.quitAndInstall()
-  });
-});
+require("./javascript/updater")
