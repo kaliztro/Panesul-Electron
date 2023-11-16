@@ -1,32 +1,40 @@
 const { dialog } = require('electron');
 const { autoUpdater } = require('electron-updater');
 
-autoUpdater.on("update-available", (_event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-       type: 'info',
-       buttons: ['Ok'],
-       title: 'Update Available',
-       message: process.platform === 'win32' ? releaseNotes : releaseName,
-       detail: `Uma nova versão ${app.getVersion()} está sendo baixada.` 
-    };
-    dialog.showMessageBox(dialogOpts);
-  
-    updateInterval = null;
- });
+let updateAvailable = false;
 
- autoUpdater.on("update-downloaded", (_event, releaseNotes, releaseName) => {
-    const dialogOpts = {
-       type: 'info',
-       buttons: ['Reiniciar', 'Depois'],
-       title: 'Application Update',
-       message: process.platform === 'win32' ? releaseNotes : releaseName,
-       detail: 'Uma nova versão foi baixada, Reinicie para aplica-las.'
+autoUpdater.on('update-available', (info) => {
+    let newAtt = {
+        type: 'info',
+        buttons: ['Ok'],
+        title: 'Atualização disponivel',
+        message: `Uma nova versão ${info.version} está sendo baixada.`
     };
-    dialog.showMessageBox(dialogOpts).then((returnValue) => {
-       if (returnValue.response === 0) autoUpdater.quitAndInstall()
+    dialog.showMessageBox(newAtt).then(() => {
+        updateAvailable = true;
+        autoUpdater.downloadUpdate();
     });
- });
+});
 
- autoUpdater.on('error', (error) => {
-    console.error('Erro durante a atualização:', error.message);
+autoUpdater.on('update-downloaded', () => {
+    if (updateAvailable) {
+        let RestartMessage = {
+            type: 'info',
+            title: 'Download concluido.',
+            message: 'O download foi concluido com sucesso.',
+            detail: 'Gostaria de reiniciar agora?',
+            buttons: ['Reiniciar', 'Depois']
+        }
+        dialog.showMessageBox(RestartMessage).then((returnValue) => {
+            if (returnValue.response === 0)
+                autoUpdater.quitAndInstall()
+        });
+    }
+});
+
+autoUpdater.on('error', (err) => {
+    dialog.showMessageBox({
+        type: 'error',
+        message: `Erro na atualização: ${err}`
+    });
 });
