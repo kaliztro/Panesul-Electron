@@ -1,0 +1,8 @@
+appId: 
+productName: 
+copyright: Copyright © 2023 
+win:
+  icon: img/Panesul.ico
+publish:
+  provider: github
+  token: 
