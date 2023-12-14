@@ -3,3 +3,4 @@ package-lock.json
 dist
 /versions
 electron-builder.yml
+package-lock.json

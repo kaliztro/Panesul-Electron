@@ -241,6 +241,13 @@ document.addEventListener('DOMContentLoaded', function() {
           $(ids[i]).mask('000.000.000.000.000,00', { reverse: true });
         }
       });
+
+      let largura = screen.width;
+      let altura = screen.height;
+  
+      if (largura == 1366 && altura == 768) {
+          document.body.style.zoom = "75%";
+      }
 })
 
 function alterarTema() {
