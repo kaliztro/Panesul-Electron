@@ -22,6 +22,17 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     
 
+    fetch('../package.json')
+        .then(response => response.json())
+        .then(data => {
+            const appVersion = data.version;
+            const appVersionElement = document.getElementById('appVersion');
+            appVersionElement.textContent = appVersion;
+        })
+        .catch(error => {
+            console.error("Erro ao buscar a versão do aplicativo:", error);
+        });
+ 
 
 
 
