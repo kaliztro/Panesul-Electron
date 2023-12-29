@@ -1,6 +1,6 @@
 {
   "name": "panesul_fechamento",
-  "version": "1.1.84",
+  "version": "1.1.85",
   "description": "Versao desktop da pagina fechamento de caixa",
   "main": "javascript/main.js",
   "scripts": {
