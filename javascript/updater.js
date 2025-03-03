@@ -40,8 +40,13 @@ autoUpdater.on('update-downloaded', () => {
 });
 
 autoUpdater.on('error', (err) => {
-    dialog.showMessageBox({
-        type: 'error',
-        message: `Erro na atualização: ${err}`
-    });
+    // Verifique se o erro é devido a credenciais inválidas
+    if (err.message.includes('401')) {
+        console.log('Token expirado ou credenciais inválidas. Ignorando erro.');
+    } else {
+        dialog.showMessageBox({
+            type: 'error',
+            message: `Erro na atualização: ${err}`
+        });
+    }
 });
