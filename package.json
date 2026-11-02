@@ -19,11 +19,11 @@
   },
   "homepage": "https://github.com/kaliztro/Panesul-Electron#readme",
   "devDependencies": {
-    "electron": "^40.4.1",
-    "electron-builder": "^26.7.0"
+    "electron": "^45.2.1",
+    "electron-builder": "^26.18.0"
   },
   "dependencies": {
-    "electron-updater": "^6.7.3",
-    "node-notifier": "^10.0.1"
+    "electron-updater": "^6.8.11",
+    "node-notifier": "^12.1.0"
   }
 }
